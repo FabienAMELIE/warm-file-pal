@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
+import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PortefeuilleRouteImport } from './routes/portefeuille'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 
@@ -30,6 +31,11 @@ const InvestissementsRoute = InvestissementsRouteImport.update({
   path: '/investissements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerformanceRoute = PerformanceRouteImport.update({
+  id: '/performance',
+  path: '/performance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortefeuilleRoute = PortefeuilleRouteImport.update({
   id: '/portefeuille',
   path: '/portefeuille',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/transactions': typeof TransactionsRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/transactions': typeof TransactionsRoute
 }
@@ -60,20 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/transactions': typeof TransactionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/investissements' | '/portefeuille' | '/transactions'
+    | '/'
+    | '/auth'
+    | '/investissements'
+    | '/performance'
+    | '/portefeuille'
+    | '/transactions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/investissements' | '/portefeuille' | '/transactions'
+  to:
+    | '/'
+    | '/auth'
+    | '/investissements'
+    | '/performance'
+    | '/portefeuille'
+    | '/transactions'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/investissements'
+    | '/performance'
     | '/portefeuille'
     | '/transactions'
   fileRoutesById: FileRoutesById
@@ -82,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   InvestissementsRoute: typeof InvestissementsRoute
+  PerformanceRoute: typeof PerformanceRoute
   PortefeuilleRoute: typeof PortefeuilleRoute
   TransactionsRoute: typeof TransactionsRoute
 }
@@ -109,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvestissementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/performance': {
+      id: '/performance'
+      path: '/performance'
+      fullPath: '/performance'
+      preLoaderRoute: typeof PerformanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portefeuille': {
       id: '/portefeuille'
       path: '/portefeuille'
@@ -130,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   InvestissementsRoute: InvestissementsRoute,
+  PerformanceRoute: PerformanceRoute,
   PortefeuilleRoute: PortefeuilleRoute,
   TransactionsRoute: TransactionsRoute,
 }
