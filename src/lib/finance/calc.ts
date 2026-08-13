@@ -36,7 +36,8 @@ export function latestPrice(
   const rows = valuations
     .filter((v) => v.asset_id === asset.id && (!onOrBefore || v.date <= onOrBefore))
     .sort((a, b) => a.date.localeCompare(b.date));
-  if (rows.length) return Number(rows[rows.length - 1].price);
+  const last = rows[rows.length - 1];
+  if (last) return Number(last.price);
   if (!onOrBefore && asset.current_price != null) return Number(asset.current_price);
   return null;
 }
@@ -159,7 +160,7 @@ export function computeSummary(positions: Position[], data: PortfolioData): Port
     realized: positions.reduce((s, p) => s + p.realized, 0),
     income: positions.reduce((s, p) => s + p.income, 0),
     fees: positions.reduce((s, p) => s + p.fees, 0),
-    lastUpdate: dates.length ? dates[dates.length - 1] : null,
+    lastUpdate: dates.length ? (dates[dates.length - 1] ?? null) : null,
   };
 }
 
@@ -187,7 +188,7 @@ function monthEnds(from: Date, to: Date): string[] {
 export function computeHistory(data: PortfolioData, base = "EUR"): HistoryPoint[] {
   const txs = [...data.transactions].sort((a, b) => a.date.localeCompare(b.date));
   if (!txs.length) return [];
-  const start = new Date(txs[0].date + "T00:00:00Z");
+  const start = new Date(txs[0]!.date + "T00:00:00Z");
   const end = new Date();
   const dates = monthEnds(start, end);
 
@@ -260,7 +261,7 @@ export function xirr(flows: CashFlow[]): number | null {
   const hasPos = flows.some((f) => f.amount > 0);
   if (!hasNeg || !hasPos) return null;
 
-  const t0 = flows[0].date.getTime();
+  const t0 = flows[0]!.date.getTime();
   const years = (d: Date) => (d.getTime() - t0) / (365 * 24 * 3600 * 1000);
   const npv = (rate: number) =>
     flows.reduce((s, f) => s + f.amount / Math.pow(1 + rate, years(f.date)), 0);
