@@ -14,7 +14,319 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      accounts: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          institution: string | null
+          is_demo: boolean
+          name: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          id?: string
+          institution?: string | null
+          is_demo?: boolean
+          name: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          institution?: string | null
+          is_demo?: boolean
+          name?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      assets: {
+        Row: {
+          account_id: string | null
+          asset_type: string
+          created_at: string
+          currency: string
+          current_price: number | null
+          geography: string | null
+          id: string
+          is_demo: boolean
+          name: string
+          notes: string | null
+          pricing_mode: string
+          sector: string | null
+          ticker: string | null
+          user_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          asset_type?: string
+          created_at?: string
+          currency?: string
+          current_price?: number | null
+          geography?: string | null
+          id?: string
+          is_demo?: boolean
+          name: string
+          notes?: string | null
+          pricing_mode?: string
+          sector?: string | null
+          ticker?: string | null
+          user_id: string
+        }
+        Update: {
+          account_id?: string | null
+          asset_type?: string
+          created_at?: string
+          currency?: string
+          current_price?: number | null
+          geography?: string | null
+          id?: string
+          is_demo?: boolean
+          name?: string
+          notes?: string | null
+          pricing_mode?: string
+          sector?: string | null
+          ticker?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assets_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      goals: {
+        Row: {
+          created_at: string
+          id: string
+          is_demo: boolean
+          kind: string
+          name: string
+          target_amount: number
+          target_date: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          kind?: string
+          name: string
+          target_amount: number
+          target_date?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_demo?: boolean
+          kind?: string
+          name?: string
+          target_amount?: number
+          target_date?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      journal_entries: {
+        Row: {
+          account_id: string | null
+          asset_id: string | null
+          content: string | null
+          created_at: string
+          date: string
+          id: string
+          is_demo: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          asset_id?: string | null
+          content?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          is_demo?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string | null
+          asset_id?: string | null
+          content?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          is_demo?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          base_currency: string
+          concentration_threshold: number
+          created_at: string
+          display_name: string | null
+          has_demo_data: boolean
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          base_currency?: string
+          concentration_threshold?: number
+          created_at?: string
+          display_name?: string | null
+          has_demo_data?: boolean
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          base_currency?: string
+          concentration_threshold?: number
+          created_at?: string
+          display_name?: string | null
+          has_demo_data?: boolean
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          account_id: string | null
+          amount: number
+          asset_id: string | null
+          created_at: string
+          currency: string
+          date: string
+          fees: number
+          id: string
+          is_demo: boolean
+          notes: string | null
+          quantity: number | null
+          type: string
+          unit_price: number | null
+          user_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          amount?: number
+          asset_id?: string | null
+          created_at?: string
+          currency?: string
+          date?: string
+          fees?: number
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          quantity?: number | null
+          type: string
+          unit_price?: number | null
+          user_id: string
+        }
+        Update: {
+          account_id?: string | null
+          amount?: number
+          asset_id?: string | null
+          created_at?: string
+          currency?: string
+          date?: string
+          fees?: number
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          quantity?: number | null
+          type?: string
+          unit_price?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      valuations: {
+        Row: {
+          asset_id: string
+          created_at: string
+          currency: string
+          date: string
+          id: string
+          is_demo: boolean
+          price: number
+          user_id: string
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          currency?: string
+          date?: string
+          id?: string
+          is_demo?: boolean
+          price: number
+          user_id: string
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          currency?: string
+          date?: string
+          id?: string
+          is_demo?: boolean
+          price?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "valuations_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
