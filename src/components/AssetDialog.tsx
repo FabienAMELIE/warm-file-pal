@@ -30,6 +30,99 @@ interface Props {
   trigger: React.ReactNode;
 }
 
+type Profile = {
+  ticker: boolean;
+  sector: boolean;
+  geography: boolean;
+  pricing: "unit" | "value" | "choice";
+  priceLabelUnit?: string;
+  priceLabelValue?: string;
+  accountLabel: string;
+  hint: string;
+};
+
+const LISTED: Profile = {
+  ticker: true,
+  sector: true,
+  geography: true,
+  pricing: "unit",
+  priceLabelUnit: "Cours actuel (par titre)",
+  accountLabel: "Compte / enveloppe (PEA, CTO…)",
+  hint: "Titre coté : la valeur est calculée à partir du cours et de la quantité détenue.",
+};
+
+const ASSET_PROFILES: Record<string, Profile> = {
+  Actions: LISTED,
+  ETF: LISTED,
+  Obligations: LISTED,
+  Fonds: LISTED,
+  Crypto: {
+    ...LISTED,
+    sector: false,
+    priceLabelUnit: "Cours actuel (par unité)",
+    accountLabel: "Plateforme / compte crypto",
+    hint: "Crypto : indiquez le cours actuel, la quantité vient de vos transactions.",
+  },
+  Immobilier: {
+    ticker: false,
+    sector: false,
+    geography: true,
+    pricing: "value",
+    priceLabelValue: "Valeur estimée du bien",
+    accountLabel: "Rattaché à (optionnel)",
+    hint: "Bien immobilier : saisissez directement sa valeur estimée actuelle.",
+  },
+  SCPI: {
+    ticker: false,
+    sector: false,
+    geography: true,
+    pricing: "choice",
+    priceLabelUnit: "Prix de la part",
+    priceLabelValue: "Valeur totale détenue",
+    accountLabel: "Compte / enveloppe",
+    hint: "SCPI : suivez en nombre de parts ou en valeur globale.",
+  },
+  Crowdfunding: {
+    ticker: false,
+    sector: false,
+    geography: false,
+    pricing: "value",
+    priceLabelValue: "Capital en cours",
+    accountLabel: "Plateforme",
+    hint: "Crowdfunding : indiquez le capital actuellement investi.",
+  },
+  "Private equity": {
+    ticker: false,
+    sector: true,
+    geography: true,
+    pricing: "value",
+    priceLabelValue: "Valorisation estimée",
+    accountLabel: "Compte / structure",
+    hint: "Private equity : valorisation estimée à la dernière évaluation.",
+  },
+  Livret: {
+    ticker: false,
+    sector: false,
+    geography: false,
+    pricing: "value",
+    priceLabelValue: "Solde actuel",
+    accountLabel: "Banque / compte",
+    hint: "Livret ou fonds euros : indiquez simplement le solde actuel.",
+  },
+  Autre: {
+    ticker: true,
+    sector: true,
+    geography: true,
+    pricing: "choice",
+    priceLabelUnit: "Prix unitaire actuel",
+    priceLabelValue: "Valeur actuelle estimée",
+    accountLabel: "Compte / enveloppe",
+    hint: "Choisissez le mode de valorisation qui correspond le mieux.",
+  },
+};
+
+const profileFor = (t: string): Profile => ASSET_PROFILES[t] ?? ASSET_PROFILES["Autre"]!;
+
 export function AssetDialog({ userId, accounts, onSaved, asset, trigger }: Props) {
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -46,7 +139,22 @@ export function AssetDialog({ userId, accounts, onSaved, asset, trigger }: Props
     notes: asset?.notes ?? "",
   });
 
+  const profile = profileFor(form.asset_type);
+
   const set = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const setType = (t: string) => {
+    const p = profileFor(t);
+    setForm((f) => ({
+      ...f,
+      asset_type: t,
+      pricing_mode: p.pricing === "choice" ? f.pricing_mode : p.pricing,
+      ticker: p.ticker ? f.ticker : "",
+      sector: p.sector ? f.sector : "Non renseigné",
+      geography: p.geography ? f.geography : "Non renseigné",
+    }));
+  };
+
 
   async function submit() {
     if (!form.name.trim()) {
