@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AllocationRouteImport } from './routes/allocation'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ImportRouteImport } from './routes/import'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ObjectifsRouteImport } from './routes/objectifs'
@@ -34,6 +35,11 @@ const AllocationRoute = AllocationRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImportRoute = ImportRouteImport.update({
+  id: '/import',
+  path: '/import',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InvestissementsRoute = InvestissementsRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
     | '/journal'
     | '/objectifs'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
     | '/journal'
     | '/objectifs'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
     | '/journal'
     | '/objectifs'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllocationRoute: typeof AllocationRoute
   AuthRoute: typeof AuthRoute
+  ImportRoute: typeof ImportRoute
   InvestissementsRoute: typeof InvestissementsRoute
   JournalRoute: typeof JournalRoute
   ObjectifsRoute: typeof ObjectifsRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/import': {
+      id: '/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof ImportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/investissements': {
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllocationRoute: AllocationRoute,
   AuthRoute: AuthRoute,
+  ImportRoute: ImportRoute,
   InvestissementsRoute: InvestissementsRoute,
   JournalRoute: JournalRoute,
   ObjectifsRoute: ObjectifsRoute,
