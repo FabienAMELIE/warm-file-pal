@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PortefeuilleRouteImport } from './routes/portefeuille'
+import { Route as ProjectionsRouteImport } from './routes/projections'
 import { Route as RevenusRouteImport } from './routes/revenus'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 
@@ -48,6 +49,11 @@ const PortefeuilleRoute = PortefeuilleRouteImport.update({
   path: '/portefeuille',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectionsRoute = ProjectionsRouteImport.update({
+  id: '/projections',
+  path: '/projections',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RevenusRoute = RevenusRouteImport.update({
   id: '/revenus',
   path: '/revenus',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/investissements': typeof InvestissementsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
   '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/investissements': typeof InvestissementsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
   '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/investissements': typeof InvestissementsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
   '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
     | '/revenus'
     | '/transactions'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
     | '/revenus'
     | '/transactions'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
     | '/revenus'
     | '/transactions'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   InvestissementsRoute: typeof InvestissementsRoute
   PerformanceRoute: typeof PerformanceRoute
   PortefeuilleRoute: typeof PortefeuilleRoute
+  ProjectionsRoute: typeof ProjectionsRoute
   RevenusRoute: typeof RevenusRoute
   TransactionsRoute: typeof TransactionsRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortefeuilleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projections': {
+      id: '/projections'
+      path: '/projections'
+      fullPath: '/projections'
+      preLoaderRoute: typeof ProjectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/revenus': {
       id: '/revenus'
       path: '/revenus'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvestissementsRoute: InvestissementsRoute,
   PerformanceRoute: PerformanceRoute,
   PortefeuilleRoute: PortefeuilleRoute,
+  ProjectionsRoute: ProjectionsRoute,
   RevenusRoute: RevenusRoute,
   TransactionsRoute: TransactionsRoute,
 }
