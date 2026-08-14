@@ -52,13 +52,19 @@ function AuthPage() {
         },
       });
       setBusy(false);
-      if (error) return toast.error(error.message);
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
       toast.success("Compte créé. Vérifiez votre boîte mail si une confirmation est demandée.");
       void navigate({ to: "/" });
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       setBusy(false);
-      if (error) return toast.error(error.message);
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
       void navigate({ to: "/" });
     }
   }
@@ -67,7 +73,10 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
-    if (result.error) return toast.error("Connexion Google impossible pour le moment.");
+    if (result.error) {
+      toast.error("Connexion Google impossible pour le moment.");
+      return;
+    }
     if (result.redirected) return;
     void navigate({ to: "/" });
   }

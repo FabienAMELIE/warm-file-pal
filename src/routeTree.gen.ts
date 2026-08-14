@@ -16,6 +16,7 @@ import { Route as ImportRouteImport } from './routes/import'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ObjectifsRouteImport } from './routes/objectifs'
+import { Route as ParametresRouteImport } from './routes/parametres'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PortefeuilleRouteImport } from './routes/portefeuille'
 import { Route as ProjectionsRouteImport } from './routes/projections'
@@ -57,6 +58,11 @@ const ObjectifsRoute = ObjectifsRouteImport.update({
   path: '/objectifs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParametresRoute = ParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerformanceRoute = PerformanceRouteImport.update({
   id: '/performance',
   path: '/performance',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
   '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/journal'
     | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/journal'
     | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/investissements'
     | '/journal'
     | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -179,6 +191,7 @@ export interface RootRouteChildren {
   InvestissementsRoute: typeof InvestissementsRoute
   JournalRoute: typeof JournalRoute
   ObjectifsRoute: typeof ObjectifsRoute
+  ParametresRoute: typeof ParametresRoute
   PerformanceRoute: typeof PerformanceRoute
   PortefeuilleRoute: typeof PortefeuilleRoute
   ProjectionsRoute: typeof ProjectionsRoute
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ObjectifsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/parametres': {
+      id: '/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof ParametresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/performance': {
       id: '/performance'
       path: '/performance'
@@ -283,6 +303,7 @@ const rootRouteChildren: RootRouteChildren = {
   InvestissementsRoute: InvestissementsRoute,
   JournalRoute: JournalRoute,
   ObjectifsRoute: ObjectifsRoute,
+  ParametresRoute: ParametresRoute,
   PerformanceRoute: PerformanceRoute,
   PortefeuilleRoute: PortefeuilleRoute,
   ProjectionsRoute: ProjectionsRoute,

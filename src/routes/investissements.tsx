@@ -53,7 +53,10 @@ function InvestmentsPage() {
 
   async function removeAsset(id: string) {
     const { error } = await supabase.from("assets").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Investissement supprimé");
     refresh();
   }
@@ -185,7 +188,10 @@ function AccountDialog({ userId, onSaved }: { userId: string; onSaved: () => voi
   });
 
   async function save() {
-    if (!form.name.trim()) return toast.error("Le nom est obligatoire");
+    if (!form.name.trim()) {
+      toast.error("Le nom est obligatoire");
+      return;
+    }
     const { error } = await supabase.from("accounts").insert({
       user_id: userId,
       name: form.name.trim(),
@@ -193,7 +199,10 @@ function AccountDialog({ userId, onSaved }: { userId: string; onSaved: () => voi
       institution: form.institution.trim() || null,
       currency: form.currency,
     });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Compte créé");
     setOpen(false);
     setForm({ name: "", type: "CTO", institution: "", currency: "EUR" });

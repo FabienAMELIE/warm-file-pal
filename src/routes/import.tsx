@@ -66,7 +66,19 @@ function ImportPage() {
     const header = splitLine(lines[0] ?? "").map((h) => h.toLowerCase());
     const idx = (name: string) => header.indexOf(name);
     const messages: string[] = [];
-    const rows: Record<string, unknown>[] = [];
+    type TxInsert = {
+      user_id: string;
+      date: string;
+      type: string;
+      asset_id: string | null;
+      quantity: number | null;
+      unit_price: number | null;
+      amount: number;
+      currency: string;
+      fees: number;
+      notes: string | null;
+    };
+    const rows: TxInsert[] = [];
 
     const assetByName = new Map(data.assets.map((a) => [a.name.toLowerCase(), a.id]));
 
