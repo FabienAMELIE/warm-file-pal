@@ -68,7 +68,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  if (loading) {
+  useEffect(() => {
+    if (!loading && !user) void navigate({ to: "/auth" });
+  }, [loading, user, navigate]);
+
+  if (loading || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
         Chargement…
@@ -76,16 +80,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     );
   }
 
-  if (!user) {
-    if (typeof window !== "undefined") {
-      void navigate({ to: "/auth" });
-    }
-    return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-        Redirection vers la connexion…
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen lg:flex">
