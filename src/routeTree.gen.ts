@@ -12,9 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AllocationRouteImport } from './routes/allocation'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ImportRouteImport } from './routes/import'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as ObjectifsRouteImport } from './routes/objectifs'
+import { Route as ParametresRouteImport } from './routes/parametres'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PortefeuilleRouteImport } from './routes/portefeuille'
+import { Route as ProjectionsRouteImport } from './routes/projections'
+import { Route as RevenusRouteImport } from './routes/revenus'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 
 const IndexRoute = IndexRouteImport.update({
@@ -32,9 +38,29 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImportRoute = ImportRouteImport.update({
+  id: '/import',
+  path: '/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InvestissementsRoute = InvestissementsRouteImport.update({
   id: '/investissements',
   path: '/investissements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObjectifsRoute = ObjectifsRouteImport.update({
+  id: '/objectifs',
+  path: '/objectifs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParametresRoute = ParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerformanceRoute = PerformanceRouteImport.update({
@@ -47,6 +73,16 @@ const PortefeuilleRoute = PortefeuilleRouteImport.update({
   path: '/portefeuille',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectionsRoute = ProjectionsRouteImport.update({
+  id: '/projections',
+  path: '/projections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RevenusRoute = RevenusRouteImport.update({
+  id: '/revenus',
+  path: '/revenus',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TransactionsRoute = TransactionsRouteImport.update({
   id: '/transactions',
   path: '/transactions',
@@ -57,18 +93,30 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
+  '/journal': typeof JournalRoute
+  '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
+  '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
+  '/journal': typeof JournalRoute
+  '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
+  '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
 export interface FileRoutesById {
@@ -76,9 +124,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
+  '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
+  '/journal': typeof JournalRoute
+  '/objectifs': typeof ObjectifsRoute
+  '/parametres': typeof ParametresRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
+  '/projections': typeof ProjectionsRoute
+  '/revenus': typeof RevenusRoute
   '/transactions': typeof TransactionsRoute
 }
 export interface FileRouteTypes {
@@ -87,27 +141,45 @@ export interface FileRouteTypes {
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
+    | '/journal'
+    | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
+    | '/revenus'
     | '/transactions'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
+    | '/journal'
+    | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
+    | '/revenus'
     | '/transactions'
   id:
     | '__root__'
     | '/'
     | '/allocation'
     | '/auth'
+    | '/import'
     | '/investissements'
+    | '/journal'
+    | '/objectifs'
+    | '/parametres'
     | '/performance'
     | '/portefeuille'
+    | '/projections'
+    | '/revenus'
     | '/transactions'
   fileRoutesById: FileRoutesById
 }
@@ -115,9 +187,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllocationRoute: typeof AllocationRoute
   AuthRoute: typeof AuthRoute
+  ImportRoute: typeof ImportRoute
   InvestissementsRoute: typeof InvestissementsRoute
+  JournalRoute: typeof JournalRoute
+  ObjectifsRoute: typeof ObjectifsRoute
+  ParametresRoute: typeof ParametresRoute
   PerformanceRoute: typeof PerformanceRoute
   PortefeuilleRoute: typeof PortefeuilleRoute
+  ProjectionsRoute: typeof ProjectionsRoute
+  RevenusRoute: typeof RevenusRoute
   TransactionsRoute: typeof TransactionsRoute
 }
 
@@ -144,11 +222,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/import': {
+      id: '/import'
+      path: '/import'
+      fullPath: '/import'
+      preLoaderRoute: typeof ImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/investissements': {
       id: '/investissements'
       path: '/investissements'
       fullPath: '/investissements'
       preLoaderRoute: typeof InvestissementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/objectifs': {
+      id: '/objectifs'
+      path: '/objectifs'
+      fullPath: '/objectifs'
+      preLoaderRoute: typeof ObjectifsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parametres': {
+      id: '/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof ParametresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/performance': {
@@ -165,6 +271,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortefeuilleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projections': {
+      id: '/projections'
+      path: '/projections'
+      fullPath: '/projections'
+      preLoaderRoute: typeof ProjectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/revenus': {
+      id: '/revenus'
+      path: '/revenus'
+      fullPath: '/revenus'
+      preLoaderRoute: typeof RevenusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/transactions': {
       id: '/transactions'
       path: '/transactions'
@@ -179,9 +299,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllocationRoute: AllocationRoute,
   AuthRoute: AuthRoute,
+  ImportRoute: ImportRoute,
   InvestissementsRoute: InvestissementsRoute,
+  JournalRoute: JournalRoute,
+  ObjectifsRoute: ObjectifsRoute,
+  ParametresRoute: ParametresRoute,
   PerformanceRoute: PerformanceRoute,
   PortefeuilleRoute: PortefeuilleRoute,
+  ProjectionsRoute: ProjectionsRoute,
+  RevenusRoute: RevenusRoute,
   TransactionsRoute: TransactionsRoute,
 }
 export const routeTree = rootRouteImport
