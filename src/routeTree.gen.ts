@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AllocationRouteImport } from './routes/allocation'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
+import { Route as ObjectifsRouteImport } from './routes/objectifs'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PortefeuilleRouteImport } from './routes/portefeuille'
 import { Route as ProjectionsRouteImport } from './routes/projections'
@@ -37,6 +38,11 @@ const AuthRoute = AuthRouteImport.update({
 const InvestissementsRoute = InvestissementsRouteImport.update({
   id: '/investissements',
   path: '/investissements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObjectifsRoute = ObjectifsRouteImport.update({
+  id: '/objectifs',
+  path: '/objectifs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerformanceRoute = PerformanceRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/objectifs': typeof ObjectifsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/objectifs': typeof ObjectifsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/allocation': typeof AllocationRoute
   '/auth': typeof AuthRoute
   '/investissements': typeof InvestissementsRoute
+  '/objectifs': typeof ObjectifsRoute
   '/performance': typeof PerformanceRoute
   '/portefeuille': typeof PortefeuilleRoute
   '/projections': typeof ProjectionsRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/allocation'
     | '/auth'
     | '/investissements'
+    | '/objectifs'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/allocation'
     | '/auth'
     | '/investissements'
+    | '/objectifs'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/allocation'
     | '/auth'
     | '/investissements'
+    | '/objectifs'
     | '/performance'
     | '/portefeuille'
     | '/projections'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AllocationRoute: typeof AllocationRoute
   AuthRoute: typeof AuthRoute
   InvestissementsRoute: typeof InvestissementsRoute
+  ObjectifsRoute: typeof ObjectifsRoute
   PerformanceRoute: typeof PerformanceRoute
   PortefeuilleRoute: typeof PortefeuilleRoute
   ProjectionsRoute: typeof ProjectionsRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/investissements'
       fullPath: '/investissements'
       preLoaderRoute: typeof InvestissementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/objectifs': {
+      id: '/objectifs'
+      path: '/objectifs'
+      fullPath: '/objectifs'
+      preLoaderRoute: typeof ObjectifsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/performance': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AllocationRoute: AllocationRoute,
   AuthRoute: AuthRoute,
   InvestissementsRoute: InvestissementsRoute,
+  ObjectifsRoute: ObjectifsRoute,
   PerformanceRoute: PerformanceRoute,
   PortefeuilleRoute: PortefeuilleRoute,
   ProjectionsRoute: ProjectionsRoute,
