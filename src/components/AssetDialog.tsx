@@ -194,23 +194,32 @@ export function AssetDialog({ userId, accounts, onSaved, asset, trigger }: Props
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{asset ? "Modifier l'investissement" : "Nouvel investissement"}</DialogTitle>
-          <DialogDescription>
-            Choisissez « valeur globale » pour l'immobilier ou un livret, « prix unitaire » pour un
-            titre coté.
-          </DialogDescription>
+          <DialogDescription>{profile.hint}</DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Type d'actif" className="sm:col-span-2">
+            <Picker value={form.asset_type} onChange={setType} options={[...ASSET_TYPES]} />
+          </Field>
           <Field label="Nom" className="sm:col-span-2">
-            <Input value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="ETF MSCI World" />
+            <Input
+              value={form.name}
+              onChange={(e) => set("name", e.target.value)}
+              placeholder={
+                form.asset_type === "Immobilier"
+                  ? "Appartement Lyon 3e"
+                  : form.asset_type === "Livret"
+                    ? "Livret A"
+                    : "ETF MSCI World"
+              }
+            />
           </Field>
-          <Field label="Ticker (optionnel)">
-            <Input value={form.ticker} onChange={(e) => set("ticker", e.target.value)} placeholder="IWDA" />
-          </Field>
-          <Field label="Type d'actif">
-            <Picker value={form.asset_type} onChange={(v) => set("asset_type", v)} options={[...ASSET_TYPES]} />
-          </Field>
-          <Field label="Compte / enveloppe">
+          {profile.ticker && (
+            <Field label="Ticker (optionnel)">
+              <Input value={form.ticker} onChange={(e) => set("ticker", e.target.value)} placeholder="IWDA" />
+            </Field>
+          )}
+          <Field label={profile.accountLabel}>
             <Picker
               value={form.account_id || "none"}
               onChange={(v) => set("account_id", v === "none" ? "" : v)}
@@ -221,21 +230,33 @@ export function AssetDialog({ userId, accounts, onSaved, asset, trigger }: Props
           <Field label="Devise">
             <Picker value={form.currency} onChange={(v) => set("currency", v)} options={[...CURRENCIES]} />
           </Field>
-          <Field label="Secteur">
-            <Picker value={form.sector} onChange={(v) => set("sector", v)} options={[...SECTORS]} />
-          </Field>
-          <Field label="Géographie">
-            <Picker value={form.geography} onChange={(v) => set("geography", v)} options={[...GEOGRAPHIES]} />
-          </Field>
-          <Field label="Mode de valorisation">
-            <Picker
-              value={form.pricing_mode}
-              onChange={(v) => set("pricing_mode", v)}
-              options={["unit", "value"]}
-              labels={{ unit: "Prix unitaire × quantité", value: "Valeur globale estimée" }}
-            />
-          </Field>
-          <Field label={form.pricing_mode === "unit" ? "Prix actuel" : "Valeur actuelle estimée"}>
+          {profile.sector && (
+            <Field label="Secteur">
+              <Picker value={form.sector} onChange={(v) => set("sector", v)} options={[...SECTORS]} />
+            </Field>
+          )}
+          {profile.geography && (
+            <Field label={form.asset_type === "Immobilier" ? "Localisation" : "Géographie"}>
+              <Picker value={form.geography} onChange={(v) => set("geography", v)} options={[...GEOGRAPHIES]} />
+            </Field>
+          )}
+          {profile.pricing === "choice" && (
+            <Field label="Mode de valorisation">
+              <Picker
+                value={form.pricing_mode}
+                onChange={(v) => set("pricing_mode", v)}
+                options={["unit", "value"]}
+                labels={{ unit: "Prix unitaire × quantité", value: "Valeur globale estimée" }}
+              />
+            </Field>
+          )}
+          <Field
+            label={
+              form.pricing_mode === "unit"
+                ? (profile.priceLabelUnit ?? "Prix actuel")
+                : (profile.priceLabelValue ?? "Valeur actuelle estimée")
+            }
+          >
             <Input
               inputMode="decimal"
               value={form.current_price}
@@ -243,6 +264,7 @@ export function AssetDialog({ userId, accounts, onSaved, asset, trigger }: Props
               placeholder="0"
             />
           </Field>
+
           <Field label="Note" className="sm:col-span-2">
             <Input value={form.notes} onChange={(e) => set("notes", e.target.value)} />
           </Field>
