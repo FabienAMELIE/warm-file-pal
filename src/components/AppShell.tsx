@@ -92,19 +92,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       {open && (
         <div className="fixed inset-0 top-[57px] z-30 overflow-y-auto bg-sidebar pb-10 pt-4 lg:hidden">
           <NavList onNavigate={() => setOpen(false)} />
-          <div className="mt-4 px-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start gap-3 text-muted-foreground"
-              onClick={async () => {
-                await signOut();
-                void navigate({ to: "/auth" });
-              }}
-            >
-              <LogOut className="size-4" /> Déconnexion
-            </Button>
-          </div>
         </div>
       )}
 
