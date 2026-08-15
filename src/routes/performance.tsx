@@ -68,28 +68,29 @@ function PerformancePage() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
-          label="XIRR annualisé"
+          label="Rendement annuel réel"
           value={irr != null ? pct(irr * 100) : "—"}
           tone={irr ?? 0}
-          hint="Rendement pondéré par les flux"
+          hint="Tient compte de la date de chaque versement (XIRR)"
         />
         <StatCard
-          label="CAGR simplifié"
+          label="Croissance moyenne par an"
           value={growth != null ? pct(growth) : "—"}
           tone={growth ?? 0}
-          hint="Croissance annuelle moyenne"
+          hint="Évolution lissée du capital investi (CAGR)"
         />
         <StatCard
-          label="Gain total"
+          label="Ce que vous avez gagné"
           value={money(totalReturn, base)}
           tone={totalReturn}
-          hint="Latent + réalisé + revenus"
+          hint="Plus-values latentes + réalisées + revenus"
         />
         <StatCard
-          label="Frais cumulés"
+          label="Frais payés au total"
           value={money(summary.fees, base)}
-          hint="Impact sur votre performance nette"
+          hint="Montant déduit de votre performance"
         />
+
       </div>
 
       <Panel className="mt-4">
