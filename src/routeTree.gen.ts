@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AllocationRouteImport } from './routes/allocation'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as InvestissementsRouteImport } from './routes/investissements'
 import { Route as JournalRouteImport } from './routes/journal'
@@ -31,11 +30,6 @@ const IndexRoute = IndexRouteImport.update({
 const AllocationRoute = AllocationRouteImport.update({
   id: '/allocation',
   path: '/allocation',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImportRoute = ImportRouteImport.update({
@@ -92,7 +86,6 @@ const TransactionsRoute = TransactionsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
-  '/auth': typeof AuthRoute
   '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
@@ -107,7 +100,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
-  '/auth': typeof AuthRoute
   '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
@@ -123,7 +115,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/allocation': typeof AllocationRoute
-  '/auth': typeof AuthRoute
   '/import': typeof ImportRoute
   '/investissements': typeof InvestissementsRoute
   '/journal': typeof JournalRoute
@@ -140,7 +131,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/allocation'
-    | '/auth'
     | '/import'
     | '/investissements'
     | '/journal'
@@ -155,7 +145,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/allocation'
-    | '/auth'
     | '/import'
     | '/investissements'
     | '/journal'
@@ -170,7 +159,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/allocation'
-    | '/auth'
     | '/import'
     | '/investissements'
     | '/journal'
@@ -186,7 +174,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllocationRoute: typeof AllocationRoute
-  AuthRoute: typeof AuthRoute
   ImportRoute: typeof ImportRoute
   InvestissementsRoute: typeof InvestissementsRoute
   JournalRoute: typeof JournalRoute
@@ -213,13 +200,6 @@ declare module '@tanstack/react-router' {
       path: '/allocation'
       fullPath: '/allocation'
       preLoaderRoute: typeof AllocationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/import': {
@@ -298,7 +278,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllocationRoute: AllocationRoute,
-  AuthRoute: AuthRoute,
   ImportRoute: ImportRoute,
   InvestissementsRoute: InvestissementsRoute,
   JournalRoute: JournalRoute,

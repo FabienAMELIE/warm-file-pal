@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useState, type ReactNode } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   Wallet,
@@ -14,7 +14,6 @@ import {
   Upload,
   Settings,
   Menu,
-  LogOut,
   X,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -64,21 +63,10 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, loading, signOut } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !user) void navigate({ to: "/auth" });
-  }, [loading, user, navigate]);
 
-  if (loading || !user) {
-    return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-        Chargement…
-      </div>
-    );
-  }
 
 
   return (
@@ -90,17 +78,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="px-3 pt-4">
           <p className="truncate px-3 pb-2 text-xs text-muted-foreground">{user.email}</p>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start gap-3 text-muted-foreground"
-            onClick={async () => {
-              await signOut();
-              void navigate({ to: "/auth" });
-            }}
-          >
-            <LogOut className="size-4" /> Déconnexion
-          </Button>
         </div>
       </aside>
 
@@ -114,19 +91,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       {open && (
         <div className="fixed inset-0 top-[57px] z-30 overflow-y-auto bg-sidebar pb-10 pt-4 lg:hidden">
           <NavList onNavigate={() => setOpen(false)} />
-          <div className="mt-4 px-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start gap-3 text-muted-foreground"
-              onClick={async () => {
-                await signOut();
-                void navigate({ to: "/auth" });
-              }}
-            >
-              <LogOut className="size-4" /> Déconnexion
-            </Button>
-          </div>
         </div>
       )}
 

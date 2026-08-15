@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
-import type { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+// Application mono-utilisateur : plus de système de connexion.
+// Toutes les données restent rattachées au compte historique.
+export const OWNER_ID = "d6780491-e3e5-48e0-8dcb-673ef25d4380";
+export const OWNER_EMAIL = "fabienamelie@hotmail.com";
 
 export function useAuth() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
-      setLoading(false);
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
-
-  const user: User | null = session?.user ?? null;
-  return { session, user, loading, signOut: () => supabase.auth.signOut() };
+  return {
+    session: null,
+    user: { id: OWNER_ID, email: OWNER_EMAIL },
+    loading: false,
+    signOut: async () => {},
+  };
 }

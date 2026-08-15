@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { AppShell, PageHeader } from "@/components/AppShell";
 import { Panel } from "@/components/Stat";
@@ -36,8 +36,7 @@ export const Route = createFileRoute("/parametres")({
 });
 
 function SettingsPage() {
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
   const { data, refresh, isLoading } = usePortfolio(user?.id);
   const [form, setForm] = useState({ name: "", currency: "EUR", threshold: "30" });
   const [busy, setBusy] = useState(false);
@@ -133,16 +132,9 @@ function SettingsPage() {
       <Panel>
         <p className="label-eyebrow">Compte</p>
         <p className="mt-2 text-sm text-muted-foreground">{user.email}</p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={async () => {
-            await signOut();
-            void navigate({ to: "/auth" });
-          }}
-        >
-          Se déconnecter
-        </Button>
+        <p className="mt-2 text-xs text-muted-foreground">
+          L'application fonctionne sans connexion : toutes les données sont rattachées à ce compte.
+        </p>
       </Panel>
     </>
   );
