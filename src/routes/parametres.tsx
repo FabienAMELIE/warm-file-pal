@@ -133,16 +133,9 @@ function SettingsPage() {
       <Panel>
         <p className="label-eyebrow">Compte</p>
         <p className="mt-2 text-sm text-muted-foreground">{user.email}</p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={async () => {
-            await signOut();
-            void navigate({ to: "/auth" });
-          }}
-        >
-          Se déconnecter
-        </Button>
+        <p className="mt-2 text-xs text-muted-foreground">
+          L'application fonctionne sans connexion : toutes les données sont rattachées à ce compte.
+        </p>
       </Panel>
     </>
   );
