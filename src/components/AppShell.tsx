@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useState, type ReactNode } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   Wallet,
@@ -14,7 +14,6 @@ import {
   Upload,
   Settings,
   Menu,
-  LogOut,
   X,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
