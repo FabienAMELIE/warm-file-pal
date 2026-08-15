@@ -45,7 +45,40 @@ const EMPTY: PortfolioData = {
   journal: [],
 };
 
-export function usePortfolio(userId: string | undefined) {
+export const REAL_ESTATE_TYPES = ["Immobilier", "SCPI"];
+const STORAGE_KEY = "patrimonia:include-real-estate";
+
+/** Case à cocher persistante : inclure ou non l'immobilier dans les statistiques. */
+export function useIncludeRealEstate() {
+  const [include, setInclude] = useState(false);
+  useEffect(() => {
+    setInclude(window.localStorage.getItem(STORAGE_KEY) === "1");
+  }, []);
+  const update = (v: boolean) => {
+    setInclude(v);
+    window.localStorage.setItem(STORAGE_KEY, v ? "1" : "0");
+  };
+  return { include, setInclude: update };
+}
+
+function withoutRealEstate(data: PortfolioData): PortfolioData {
+  const excluded = new Set(
+    data.assets.filter((a) => REAL_ESTATE_TYPES.includes(a.asset_type)).map((a) => a.id),
+  );
+  if (!excluded.size) return data;
+  return {
+    ...data,
+    assets: data.assets.filter((a) => !excluded.has(a.id)),
+    transactions: data.transactions.filter((t) => !t.asset_id || !excluded.has(t.asset_id)),
+    valuations: data.valuations.filter((v) => !excluded.has(v.asset_id)),
+  };
+}
+
+export function usePortfolio(
+  userId: string | undefined,
+  options?: { includeRealEstate?: boolean },
+) {
+  const includeRealEstate = options?.includeRealEstate ?? true;
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ["portfolio", userId],
@@ -53,8 +86,13 @@ export function usePortfolio(userId: string | undefined) {
     enabled: !!userId,
   });
 
-  const data = query.data ?? EMPTY;
+  const raw = query.data ?? EMPTY;
+  const data = useMemo(
+    () => (includeRealEstate ? raw : withoutRealEstate(raw)),
+    [raw, includeRealEstate],
+  );
   const base = data.profile?.base_currency ?? "EUR";
+
 
   const derived = useMemo(() => {
     const { positions, totalValue } = computePositions(data, base);
