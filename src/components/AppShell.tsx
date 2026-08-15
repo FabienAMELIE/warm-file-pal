@@ -79,17 +79,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="px-3 pt-4">
           <p className="truncate px-3 pb-2 text-xs text-muted-foreground">{user.email}</p>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start gap-3 text-muted-foreground"
-            onClick={async () => {
-              await signOut();
-              void navigate({ to: "/auth" });
-            }}
-          >
-            <LogOut className="size-4" /> Déconnexion
-          </Button>
         </div>
       </aside>
 
