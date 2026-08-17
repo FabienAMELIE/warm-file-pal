@@ -7,7 +7,7 @@ import { PortfolioChart } from "@/components/PortfolioChart";
 import { EmptyState, Panel, PerfPair, StatCard } from "@/components/Stat";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { usePortfolio } from "@/lib/finance/usePortfolio";
+import { usePortfolio, useIncludeRealEstate } from "@/lib/finance/usePortfolio";
 import { allocationBy, buildCashFlows, xirr } from "@/lib/finance/calc";
 import { frDate, money, pct } from "@/lib/format";
 
