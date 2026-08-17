@@ -90,7 +90,7 @@ function Dashboard() {
                 onChange={(e) => setInclude(e.target.checked)}
                 className="size-4 accent-[var(--color-brass)]"
               />
-              Inclure l'immobilier (SCPI, biens)
+              Inclure l'immobilier (Appartement
             </label>
             <Button asChild>
               <Link to="/transactions">Ajouter une opération</Link>
