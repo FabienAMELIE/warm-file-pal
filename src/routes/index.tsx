@@ -82,11 +82,23 @@ function Dashboard() {
         title="Dashboard"
         subtitle={`Dernière donnée enregistrée le ${frDate(summary.lastUpdate)}.`}
         action={
-          <Button asChild>
-            <Link to="/transactions">Ajouter une opération</Link>
-          </Button>
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+              <input
+                type="checkbox"
+                checked={include}
+                onChange={(e) => setInclude(e.target.checked)}
+                className="size-4 accent-[var(--color-brass)]"
+              />
+              Inclure l'immobilier (SCPI, biens)
+            </label>
+            <Button asChild>
+              <Link to="/transactions">Ajouter une opération</Link>
+            </Button>
+          </div>
         }
       />
+
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
