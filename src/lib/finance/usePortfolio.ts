@@ -109,7 +109,7 @@ export function usePortfolio(
     data,
     base,
     ...derived,
-    isEmpty: !query.isLoading && data.assets.length === 0 && data.transactions.length === 0,
+    isEmpty: !query.isLoading && raw.assets.length === 0 && raw.transactions.length === 0,
     refresh: () => queryClient.invalidateQueries({ queryKey: ["portfolio"] }),
   };
 }
