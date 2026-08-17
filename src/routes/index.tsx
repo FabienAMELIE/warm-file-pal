@@ -36,8 +36,10 @@ export const Route = createFileRoute("/")({
 
 function Dashboard() {
   const { user } = useAuth();
-  const p = usePortfolio(user?.id);
+  const { include, setInclude } = useIncludeRealEstate();
+  const p = usePortfolio(user?.id, { includeRealEstate: include });
   const { positions, summary, history, base, data, isEmpty, refresh } = p;
+
 
   const irr = useMemo(
     () => xirr(buildCashFlows(data, summary.totalValue, base)),
